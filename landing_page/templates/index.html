@@ -1,0 +1,349 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <title>FOXLEADS io | StartUp</title>
+  </head>
+  <body>
+    <nav class="section__container nav__container">
+      <div class="nav__logo">
+        <span class="fox-letters"></span>
+        <span class="fox-logo">
+          <img src="{% static 'assets/background.png' %}" alt="Fox Logo">
+        </span>
+        <span class="fox-letters">LEADS_</span>
+      </div>
+      <input type="checkbox" id="nav-toggle" class="nav__toggle" />
+      <label for="nav-toggle" class="nav__burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <ul class="nav__links">
+        <li class="link"><a href="#home">Home</a></li>
+        <li class="link"><a href="#pricing">Pricing</a></li>
+        <li class="link"><a href="#services">Services</a></li>
+        <li class="link"><a href="#testimonials">Testimonials</a></li>
+        <li class="link"><a href="#faq">FAQ</a></li>
+        <button class="btn">Login In / Sign Up</button>
+
+      </ul>
+  </nav>
+  <header class="section__container header__container" id="home">
+    <h1 class="section__header">
+        Generate Leads,<br />
+        in no <span>time.</span>
+    </h1>
+    <img src="{% static 'assets/background.png' %}" alt="background">
+    <div class="paragraph__container">
+        <p class="paragraph__text">
+          <h3>
+            Bridging the gap between Businesses and Genuine Prospects        
+          </h3>
+        </p>
+    </div>
+      <button class="btn">Generate</button>
+    </header>
+
+    <section class="section__container service__container" id="services">
+      <p class="section__subheader">Our Services</p>
+      <h2 class="section__header">What We Bring To The Table</h2>
+      <div class="service__grid">
+        <div class="service__card">
+          <div class="service__icon">
+            <img src="{% static 'assets/check-mark.png' %}" alt="service" />
+          </div>
+          <h4>Phone Number Verification</h4>
+          <p>
+            Verify phone numbers to ensure they are valid and owned by genuine prospects.
+          </p>
+          <a href="#">
+            Learn more <span><i class="ri-arrow-right-line"></i></span>
+          </a>
+        </div>
+        <div class="service__card">
+          <div class="service__icon">
+            <img src="{% static 'assets/new-document.png' %}" alt="service" />
+          </div>
+          <h4>Lead Generation</h4>
+          <p>
+            Generate high-quality leads by connecting with authentic businesses and customers.
+          </p>
+          <a href="#">
+            Learn more <span><i class="ri-arrow-right-line"></i></span>
+          </a>
+        </div>
+        <div class="service__card">
+          <div class="service__icon">
+            <img src="{% static 'assets/pattern-code.png' %}" alt="service" />
+          </div>
+          <h4>Seamless Communication</h4>
+          <p>
+            Facilitate smooth communication channels between businesses and potential customers.
+          </p>
+          <a href="#">
+            Learn more <span><i class="ri-arrow-right-line"></i></span>
+          </a>
+        </div>
+        <div class="service__card">
+          <div class="service__icon">
+            <img src="{% static 'assets/connect.png' %}" alt="service" />
+          </div>
+          <h4>Authentic Connections</h4>
+          <p>
+            Build genuine connections with verified businesses and prospects for mutual benefit.
+          </p>
+          <a href="#">
+            Learn more <span><i class="ri-arrow-right-line"></i></span>
+          </a>
+        </div>
+        <div class="service__card">
+          <div class="service__icon">
+            <img src="{% static 'assets/network.png' %}" alt="service" />
+          </div>
+          <h4>Efficient Networking</h4>
+          <p>
+            Streamline networking efforts by providing verified contact information of potential leads.
+          </p>
+          <a href="#">
+            Learn more <span><i class="ri-arrow-right-line"></i></span>
+          </a>
+        </div>
+        <div class="service__card">
+          <div class="service__icon">
+            <img src="{% static 'assets/lead-generation.png' %}" alt="service" />
+          </div>
+          <h4>Lead Management</h4>
+          <p>
+            Organize and manage leads effectively to maximize conversion rates and business growth.
+          </p>
+          <a href="#">
+            Learn more <span><i class="ri-arrow-right-line"></i></span>
+          </a>
+        </div>
+      </div>
+    </section>
+    
+    <section class="section__container template__container">
+      <div class="template__content">
+        <p class="section__subheader">Our Templates</p>
+        <h2 class="section__header">Powerful Phone Leads Gnerator for your business</h2>
+        <p class="description">
+          We believe that countless customers and businesses are actively seeking connections
+            with authentic enterprises. Our innovative solution bridges this gap, providing
+            verified USA phone numbers along with their owners' names, empowering businesses
+            to efficiently connect with genuine prospects. We solve the lead generation problem,
+            enabling seamless communication between businesses and potential customers.
+        </p>
+        <button class="btn">Learn more</button>
+      </div>
+      <div class="template__image">
+        <img src="{% static 'assets/leads.jpg' %}" alt="template" />
+      </div>
+    </section>
+
+    <section class="section__container pricing__container" id="pricing">
+      <p class="section__subheader">Our Pricing</p>
+      <h2 class="section__header">Flexible Plans to Suit Your Needs</h2>
+      <div class="pricing__grid">
+        <div class="pricing__card">
+          <h3>Basic</h3>
+          <p class="price">$19<span>/mo</span></p>
+          <ul>
+            <li>1000 validated numbers/month</li>
+            <li>Limited support</li>
+          </ul>
+          <a href="#" class="btn">Get Started</a>
+        </div>
+        <div class="pricing__card">
+          <h3>Standard</h3>
+          <p class="price">$49<span>/mo</span></p>
+          <ul>
+            <li>5000 validated numbers/month</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#" class="btn">Get Started</a>
+        </div>
+        <div class="pricing__card">
+          <h3>Premium</h3>
+          <p class="price">$99<span>/mo</span></p>
+          <ul>
+            <li>Unlimited validated numbers</li>
+            <li>Premium support</li>
+          </ul>
+          <a href="#" class="btn">Get Started</a>
+        </div>
+      </div>
+    </section>
+   
+    <section class="section__container client__container" id="testimonials">
+      <p class="section__subheader">Testimonials</p>
+      <h2 class="section__header">What Our Clients Say</h2>
+      <div class="client__grid">
+        <div class="client__card">
+          <img src="{% static 'assets/pic-1.jpg' %}" alt="client" />
+          <h4>Increased Conversion Rates</h4>
+          <p>
+            Since implementing FOXLEADS_, our conversion rates have skyrocketed. The verified leads provided by FOXLEADS_ have proven to be highly valuable, leading to significant business growth. We highly recommend FOXLEADS_ to any business looking to boost their sales and outreach.
+          </p>
+        </div>
+        <div class="client__card">
+          <img src="{% static 'assets/pic-2.jpeg' %}" alt="client" />
+          <h4>Streamlined Communication</h4>
+          <p>
+            FOXLEADS_ has revolutionized our communication channels with prospects. The seamless integration of verified contact information into our CRM system has saved us valuable time and resources. Our team can now focus on building genuine connections with prospects, thanks to FOXLEADS_.
+          </p>
+        </div>
+        <div class="client__card">
+          <img src="{% static 'assets/pic-3.jpg' %}" alt="client" />
+          <h4>Exceptional Support</h4>
+          <p>
+            The support provided by the FOXLEADS_ team has been exceptional. From the initial onboarding process to ongoing assistance, they have been there every step of the way. Any questions or concerns we've had were addressed promptly and professionally. FOXLEADS_ truly cares about the success of its clients.
+          </p>
+        </div>
+      </div>
+    </section>
+ 
+    <section class="section__container question__container" id="faq">
+      <p class="section__subheader">Have Questions?</p>
+      <h2 class="section__header">Frequently Asked Questions</h2>
+      <div class="question__accordian">
+        <!-- Existing FAQ items -->
+        <div class="question__box">
+          <div class="title">
+            <span>What services does your business offer?</span>
+            <span class="icon"><i class="ri-add-fill"></i></span>
+          </div>
+          <div class="content">
+            At FOXLEADS_, we offer innovative lead generation solutions that help businesses connect with genuine prospects. Our services include phone number verification, lead generation, seamless communication channels, authentic connections, efficient networking, and lead management.
+          </div>
+        </div>
+        <div class="question__box">
+          <div class="title">
+            <span>How can FOXLEADS_ help my business?</span>
+            <span class="icon"><i class="ri-add-fill"></i></span>
+          </div>
+          <div class="content">
+            FOXLEADS_ provides verified USA phone numbers along with their owners' names, empowering businesses to efficiently connect with genuine prospects. Our solutions help streamline lead generation efforts, improve communication channels, and maximize conversion rates for business growth.
+          </div>
+        </div>
+        <div class="question__box">
+          <div class="title">
+            <span>How do I get the leads generated?</span>
+            <span class="icon"><i class="ri-add-fill"></i></span>
+          </div>
+          <div class="content">
+            We provide leads in various formats, including text, JSON, and CSV files. Once generated, you can download the leads in your preferred format and integrate them seamlessly into your business workflow.
+          </div>
+        </div>
+        <div class="question__box">
+          <div class="title">
+            <span>Is FOXLEADS_ suitable for small businesses?</span>
+            <span class="icon"><i class="ri-add-fill"></i></span>
+          </div>
+          <div class="content">
+            Yes, FOXLEADS_ is designed to cater to businesses of all sizes, including small businesses. Our flexible plans and scalable solutions ensure that businesses of any size can benefit from our lead generation services.
+          </div>
+        </div>
+        <div class="question__box">
+          <div class="title">
+            <span>Can I customize FOXLEADS_ services to suit my specific needs?</span>
+            <span class="icon"><i class="ri-add-fill"></i></span>
+          </div>
+          <div class="content">
+            Absolutely! FOXLEADS_ offers customizable solutions tailored to meet the unique requirements of your business. Whether you need specific lead generation features or personalized support, we can adapt our services to suit your needs.
+          </div>
+        </div>
+        <div class="question__box">
+          <div class="title">
+            <span>How secure is FOXLEADS_?</span>
+            <span class="icon"><i class="ri-add-fill"></i></span>
+          </div>
+          <div class="content">
+            Security is a top priority at FOXLEADS_. We utilize the latest encryption and data protection measures to ensure that your information remains safe and secure. Our platform is compliant with industry standards and regulations to safeguard your data privacy.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="section__container footer__container">
+      <div class="footer__grid">
+        <div class="footer__col">
+          <div class="footer__logo">
+            <!-- Replace "WDM" with the fox logo -->
+            <img src="{% static 'assets/background.png' %}" alt="Fox Logo">
+          </div>
+          <p>
+            <span><i class="ri-mail-fill"></i></span> williams.asante515@gmail.com
+          </p>
+          <p>
+            <span><i class="ri-phone-fill"></i></span> +212 609090882
+          </p>
+        </div>
+        <div class="footer__col">
+          <h4>About</h4>
+          <p>Home</p>
+          <p>Pricing</p>
+          <p>Company</p>
+          <p>Resource</p>
+        </div>
+        <div class="footer__col">
+          <h4>Features</h4>
+          <p>Blog</p>
+          <p>Privacy Policy</p>
+          <p>Terms & Conditions</p>
+        </div>
+        <div class="footer__col">
+          <h4>Contact</h4>
+          <p>Department</p>
+          <p>Media</p>
+          <p>Support</p>
+        </div>
+      </div>
+    </footer>
+    <div class="section__container footer__bar">
+      <p>Copyright © 2024 Web Design Mastery. All rights reserved.</p>
+      <div class="socials">
+        <span><i class="ri-facebook-fill"></i></span>
+        <span><i class="ri-twitter-fill"></i></span>
+        <span><i class="ri-instagram-line"></i></span>
+        <span><i class="ri-youtube-fill"></i></span>
+      </div>
+    </div>
+
+    <script>
+      const questionBox = document.getElementsByClassName("question__box");
+
+      for (let i = 0; i < questionBox.length; i++) {
+        questionBox[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+        });
+      }
+
+      // Smooth scrolling for nav links
+      document.querySelectorAll('.nav__links a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+
+          const targetId = this.getAttribute('href').substring(1);
+          const targetElement = document.getElementById(targetId);
+
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - document.querySelector('.nav__container').offsetHeight,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
