@@ -16,9 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from dashboard_page.views import dashboard
+from dashboard_page.views import dashboard, get_cities_and_area_codes
 
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', include('landing_page.urls')),
+    path('dashboard/', dashboard, name='dashboard'),
+    path('api/cities/', get_cities_and_area_codes, name='get_cities_and_area_codes'),  # Include the API endpoint
+
+
 ]
