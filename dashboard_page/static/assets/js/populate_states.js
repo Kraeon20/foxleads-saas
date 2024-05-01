@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const stateSelect = document.getElementById('state-select');
     const citySelect = document.getElementById('city-select');
     const areaCodeSelect = document.getElementById('area-code-select');
+    const generateBtn = document.getElementById('generate-btn');
+    const generatedNumbersDiv = document.getElementById('generated-numbers');
 
     stateSelect.addEventListener('change', function () {
         const selectedState = stateSelect.value;
@@ -9,14 +11,10 @@ document.addEventListener('DOMContentLoaded', function () {
             citySelect.disabled = true;
             areaCodeSelect.disabled = true;
         } else {
-            // Make a request to your backend to fetch cities and area codes based on the selected state
-            // You can use AJAX (e.g., fetch API or XMLHttpRequest) to make the request
-            fetch(`/api/cities?state=${selectedState}`) // Replace this URL with your actual endpoint
+            fetch(`/api/cities?state=${selectedState}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Populate city select with fetched cities
                     citySelect.innerHTML = '';
-                    // Add placeholder option for city
                     const cityPlaceholderOption = document.createElement('option');
                     cityPlaceholderOption.value = '';
                     cityPlaceholderOption.textContent = 'Select a City';
@@ -28,10 +26,21 @@ document.addEventListener('DOMContentLoaded', function () {
                         citySelect.appendChild(option);
                     });
                     citySelect.disabled = false;
+                    areaCodeSelect.disabled = true;
+                })
+                .catch(error => {
+                    console.error('Error fetching cities and area codes:', error);
+                });
+        }
+    });
 
-                    // Populate area code select with fetched area codes
+    citySelect.addEventListener('change', function () {
+        const selectedCity = citySelect.value;
+        if (selectedCity !== '') {
+            fetch(`/api/area-codes?city=${selectedCity}`)
+                .then(response => response.json())
+                .then(data => {
                     areaCodeSelect.innerHTML = '';
-                    // Add placeholder option for area code
                     const areaCodePlaceholderOption = document.createElement('option');
                     areaCodePlaceholderOption.value = '';
                     areaCodePlaceholderOption.textContent = 'Select an Area Code';
@@ -45,8 +54,37 @@ document.addEventListener('DOMContentLoaded', function () {
                     areaCodeSelect.disabled = false;
                 })
                 .catch(error => {
-                    console.error('Error fetching cities and area codes:', error);
+                    console.error('Error fetching area codes:', error);
                 });
+        } else {
+            areaCodeSelect.innerHTML = '';
+            const areaCodePlaceholderOption = document.createElement('option');
+            areaCodePlaceholderOption.value = '';
+            areaCodePlaceholderOption.textContent = 'Select an Area Code';
+            areaCodeSelect.appendChild(areaCodePlaceholderOption);
+            areaCodeSelect.disabled = true;
         }
+    });
+
+    generateBtn.addEventListener('click', function () {
+        const selectedState = stateSelect.value;
+        const selectedCity = citySelect.value;
+        const selectedAreaCode = areaCodeSelect.value;
+        const numOfNumbers = parseInt(document.getElementById('num-of-numbers').value);
+
+        fetch(`/api/generate-numbers?state=${selectedState}&city=${selectedCity}&area_code=${selectedAreaCode}&numOfNumbers=${numOfNumbers}`)
+            .then(response => response.json())
+            .then(data => {
+                const generatedNumbersDiv = document.getElementById('generated-numbers');
+                generatedNumbersDiv.innerHTML = '';
+                data.numbers.forEach(number => {
+                    const p = document.createElement('p');
+                    p.textContent = number;
+                    generatedNumbersDiv.appendChild(p);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching random numbers:', error);
+            });
     });
 });

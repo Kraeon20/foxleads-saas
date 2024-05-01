@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from dashboard_page.views import dashboard
-from dashboard_page.views import dashboard, get_cities_and_area_codes
+from dashboard_page.views import dashboard, get_cities_and_area_codes, get_area_codes, get_random_numbers
 
 
 urlpatterns = [
@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('landing_page.urls')),
     path('dashboard/', dashboard, name='dashboard'),
     path('api/cities/', get_cities_and_area_codes, name='get_cities_and_area_codes'),  # Include the API endpoint
-
+    path('api/area-codes/', get_area_codes, name='get_area_codes'),
+    path('api/generate-numbers', get_random_numbers, name='get_random_numbers')
 
 ]
