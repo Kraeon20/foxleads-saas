@@ -11,8 +11,9 @@
     <!-- Box Icons  -->
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <!-- Styles  -->
-    <link rel="shortcut icon" href="{% static 'assets/img/kxp_fav.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'assets/img/background.png' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
 </head>
 
 <body>
@@ -35,60 +36,6 @@
                         <i class='bx bx-grid-alt'></i>
                         <span class="name">Dashboard</span>
                     </a>
-                    <!-- <i class='bx bxs-chevron-down'></i> -->
-                </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Dashboard</a>
-                    <!-- submenu links here  -->
-                </div>
-            </li>
-
-            <!-- -------- Dropdown List Item ------- -->
-            <li class="dropdown">
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-collection'></i>
-                        <span class="name">Category</span>
-                    </a>
-                    <i class='bx bxs-chevron-down'></i>
-                </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Category</a>
-                    <a href="#" class="link">HTML & CSS</a>
-                    <a href="#" class="link">JavaScript</a>
-                    <a href="#" class="link">PHP & MySQL</a>
-                </div>
-            </li>
-
-            <!-- -------- Dropdown List Item ------- -->
-            <li class="dropdown">
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-book-alt'></i>
-                        <span class="name">Posts</span>
-                    </a>
-                    <i class='bx bxs-chevron-down'></i>
-                </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Posts</a>
-                    <a href="#" class="link">Web Design</a>
-                    <a href="#" class="link">Login Form</a>
-                    <a href="#" class="link">Card Design</a>
-                </div>
-            </li>
-
-            <!-- -------- Non Dropdown List Item ------- -->
-            <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-line-chart'></i>
-                        <span class="name">Analytics</span>
-                    </a>
-                    <!-- <i class='bx bxs-chevron-down'></i> -->
-                </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Analytics</a>
-                    <!-- submenu links here  -->
                 </div>
             </li>
 
@@ -97,75 +44,8 @@
                 <div class="title">
                     <a href="#" class="link">
                         <i class='bx bx-pie-chart-alt-2'></i>
-                        <span class="name">Chart</span>
+                        <span class="name">Validate Numbers</span>
                     </a>
-                    <!-- <i class='bx bxs-chevron-down'></i> -->
-                </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Chart</a>
-                    <!-- submenu links here  -->
-                </div>
-            </li>
-
-            <!-- -------- Dropdown List Item ------- -->
-            <li class="dropdown">
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-extension'></i>
-                        <span class="name">Plugins</span>
-                    </a>
-                    <i class='bx bxs-chevron-down'></i>
-                </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Plugins</a>
-                    <a href="#" class="link">UI Face</a>
-                    <a href="#" class="link">Pigments</a>
-                    <a href="#" class="link">Box Icons</a>
-                </div>
-            </li>
-
-            <!-- -------- Non Dropdown List Item ------- -->
-            <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-compass'></i>
-                        <span class="name">Explore</span>
-                    </a>
-                    <!-- <i class='bx bxs-chevron-down'></i> -->
-                </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Explore</a>
-                    <!-- submenu links here  -->
-                </div>
-            </li>
-
-            <!-- -------- Non Dropdown List Item ------- -->
-            <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-history'></i>
-                        <span class="name">History</span>
-                    </a>
-                    <!-- <i class='bx bxs-chevron-down'></i> -->
-                </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">History</a>
-                    <!-- submenu links here  -->
-                </div>
-            </li>
-
-            <!-- -------- Non Dropdown List Item ------- -->
-            <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-cog'></i>
-                        <span class="name">Settings</span>
-                    </a>
-                    <!-- <i class='bx bxs-chevron-down'></i> -->
-                </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Settings</a>
-                    <!-- submenu links here  -->
                 </div>
             </li>
         </ul>
@@ -182,42 +62,69 @@
             </div>
         </nav>
 
-        <div class="dashboard">
-            <h2>Generate Numbers</h2>
-            <div class="generate-container">
-                <div class="options">
-                    <select id="state-select">
-                        <option value="random">Random State</option>
-                        {% for state in distinct_states %}
-                        <option value="{{ state.state }}">{{ state.state }}</option>
-                        {% endfor %}
-                    </select>
-                    <select id="city-select" disabled>
-                        <option value="">Select a City</option>
-                        <option value="random">Random City</option>
-                    </select>
-                    <select id="area-code-select" disabled>
-                        <option value="">Select an Area Code</option>
-                        <option value="random">Random Area Code</option>
-                    </select>
-
-                    <input type="number" id="num-of-numbers" placeholder="Number of numbers" inputmode="numeric">
-
-                    <button id="generate-btn">Generate</button>
-                </div>
-                <div class="generated-numbers" id="generated-numbers">
-                    <!-- Display generated numbers here -->
-                    
+        <div class="main">
+            <div class="content-wrapper">
+                <div class="container">
+                    <div class="file-generate-container">
+                        <!-- Add label above file-upload container -->
+                        <label class="label" for="file-input">Upload File</label>
+                        <div class="file-upload">
+                            <div class="drop-zone" id="drop-zone">
+                                <p id="drop-text">Drag & Drop file here</p>
+                                <input type="file" id="file-input" class="choose-file">
+                                <label for="file-input" class="choose-file-label"></label>
+                                <p id="file-name"></p> <!-- Display file name here -->
+                            </div>
+                            <button id="validate-file-btn" class="validate-file-btn">Validate File</button>
+                            <div id="error-message" style="color: red;"></div>
+                        </div>
+                
+                        <label class="label">Dashboard</label>
+                        <div class="generate-container">
+                            <div class="options">
+                                <select id="state-select">
+                                    <option value="random">State</option>
+                                    {% for state in distinct_states %}
+                                    <option value="{{ state.state }}">{{ state.state }}</option>
+                                    {% endfor %}
+                                </select>
+                                <select id="city-select" disabled>
+                                    <option value="">City</option>
+                                    <option value="random">City</option>
+                                </select>
+                                <select id="area-code-select" disabled>
+                                    <option value="random">Code</option>
+                                </select>
+                                <input type="number" id="num-of-numbers" placeholder="Quantity" inputmode="numeric">
+                            </div>
+                            <button id="validate-btn" class="validate-btn">Validate</button>
+                        </div>
+                    </div>
                 </div>
                 
-            </div>
+                <!-- Table Container -->
+                <div class="table-container" id="validation-table">
+                    <table class="validation-table">
+                        <thead>
+                            <tr>
+                                <th>phone_number</th>
+                                <th>is_valid</th>
+                                <th>line_type</th>
+                                <th>carrier</th>
+                                <th>is_prepaid</th>
+                            </tr>
+                        </thead>
+                        <tbody id="validation-table-body"></tbody>
+                    </table>
+                </div>
+                
         </div>
-        
-    
-    
-    
+    </div>
+
     <!-- Link JS -->
     <script src="{% static 'assets/js/main.js' %}"></script>
+    <!-- <script src="{% static 'assets/js/file-upload.js' %}"></script> -->
+    <!-- <script src="{% static 'assets/js/apiconnect.js' %}"></script> -->
     <script src="{% static 'assets/js/populate_states.js' %}"></script>
 </body>
 

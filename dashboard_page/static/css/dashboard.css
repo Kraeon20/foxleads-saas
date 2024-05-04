@@ -1,9 +1,11 @@
 /* Google Fonts  */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
 
 /* Globals  */
 *{
-    font-family: 'Poppins', sans-serif;
+    font-family: "Tajawal", sans-serif;
+    font-weight: 500;
+    font-style: normal;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -30,8 +32,8 @@
     left: 0;
     height: 100%;
     width: 78px;
-    background-color: var(--color_Dark1);
-    transition: all .5s ease;
+    background-color: #333; /* Change the background color */
+    transition: width 0.5s ease; /* Change the animation to width only */
     z-index: 100;
 }
 .sidebar:hover{
@@ -145,9 +147,11 @@
     display: none;
 }
 
-/* ---------------- Submenu Close ------------- */
 
-/* =============== Home Section =============== */
+.main {
+    margin-top: 30px;
+}
+
 .home {
     position: relative;
     background-color: var(--color_Light1);
@@ -155,6 +159,8 @@
     width: calc(100% - 78px); /* Adjust based on collapsed width */
     height: 100vh;
     transition: all .5s ease;
+    padding: 0; /* Add padding to create space around content */
+    margin: 0;
 }
 
 .sidebar:hover ~ .home {
@@ -166,72 +172,137 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #fff; /* Adjust as needed */
-    border-bottom: 1px solid #ddd; /* Adjust as needed */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for a professional look */
+    padding: 20px; /* Increase padding to increase height */
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 50px; /* Set desired height */
 }
 
 .navbar-left {
-    flex: 1; /* Make it take up as much space as possible */
+    flex: 1;
 }
 
 .navbar-right {
-    flex-shrink: 0; /* Don't allow it to shrink */
+    flex-shrink: 0;
+}
+
+.content-wrapper {
+    display: block;
+    gap: 20px; /* Gap between columns */
 }
 
 
-/* =============== Dashboard =============== */
-/* =============== Dashboard =============== */
-.dashboard {
-    margin: 20px auto; /* Center the dashboard horizontally */
-    max-width: 600px; /* Limit the maximum width of the dashboard */
+.file-upload,
+.generate-container {
+    padding: 20px; /* Add padding for spacing */
+    height: 150px; /* Set height */
+    width: calc(50% - 20px); /* Set width */
+    background-color: #fff; /* Set background color */
+    border-radius: 8px; /* Add border radius for rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.display-numbers {
+    height: 93%; /* Take full height */
+    width: 100%;
     padding: 20px;
+    margin-top: 5px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.dashboard h2 {
-    margin-bottom: 20px;
-    text-align: center; /* Center the heading */
+.file-upload {
+    background-color: #fff; /* Set background color */
+    border-radius: 8px; /* Add border radius for rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
 }
+
+/* Add styles for the drop zone */
+.drop-zone {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    text-align: center;
+    transition: border-color 0.3s ease;
+    margin-bottom: 20px;
+    height: 200px; /* Adjust the height as needed */
+    border: 2px dashed #f4d5a1;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* Center the "drag & drop" text */
+#drop-text {
+    position: absolute;
+    transform: translateY(-100%);
+    margin-bottom: 50px;
+}
+
+/* Adjust margin between file name and "drag & drop" text */
+#file-name {
+    margin-bottom: 40px; /* Increase the margin for better spacing */
+}
+
+
+/* Center the "Choose file" button */
+.choose-file{
+    margin-top: 50px;
+    cursor: pointer;
+}
+
+.validate-file-btn {
+    padding: 12px 20px; /* Add padding for button size */
+    background-color: #4CAF50; /* Set button background color */
+    color: white; /* Set text color */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Add border radius */
+    cursor: pointer; /* Add pointer cursor */
+    transition: background-color 0.3s ease; /* Add transition for hover effect */
+}
+
+.validate-file-btn:hover {
+    background-color: #45a049; /* Change background color on hover */
+}
+
+
+.label {
+    font-size: 14px; /* Adjust font size as needed */
+    font-weight: bold; /* Optionally adjust font weight */
+    margin-bottom: 5px; /* Add margin bottom to create space between label and container */
+    margin-top: 0; /* Ensure no margin at the top */
+}
+
 
 .options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Use grid layout with flexible columns */
-    grid-gap: 10px; /* Add some gap between grid items */
-    align-items: center;
-    margin-bottom: 20px;
-    grid-column: 1 / 2; /* Span from first to second column */
-
+    display: flex;
+    gap: 10px; /* Adjust gap between items */
 }
 
+
 .options input[type="number"],
-.options select, 
-.generated-numbers {
-    width: 100%;
+.options select {
+    flex: 1; /* Let them take up remaining space */
     padding: 12px;
     border: 1px solid #10d237; /* Border color */
     border-radius: 4px; /* Border radius */
     box-sizing: border-box;
 }
 
-/* Styling for the button */
-.options button {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc; /* Border color */
-    border-radius: 4px; /* Border radius */
-    box-sizing: border-box;
-    background-color: #f37521; /* Background color */
-    color: #fff; /* Text color */
-    cursor: pointer;
+.validate-btn {
+    padding: 12px 20px; /* Adjust padding as needed */
+    background-color: #4CAF50; /* Green background color */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Add border radius */
+    cursor: pointer; /* Add pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Add smooth transition for background color */
 }
 
-/* Change button color on hover */
-.options button:hover {
-    background-color: #e64a19; /* Adjusted background color */
+.validate-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
 }
 
 /* Hide number input spinner arrows */
@@ -246,23 +317,190 @@ input[type="number"] {
     appearance: textfield; /* Standard */
 }
 
+
 .generate-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px; /* Adjust gap between columns */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 20px; /* Adjust gap between items */
+    padding: 20px; /* Add padding for spacing */
+    background-color: #fff; /* Set background color */
+    border-radius: 8px; /* Add border radius for rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    align-items: center; /* Align items to the center horizontally */
 }
 
-.generated-numbers {
-    grid-column: 2 / 3; /* Span from second to third column */
+
+.validate-btn-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-top: 20px; /* Adjust margin as needed */
 }
+
+.validate-btn {
+    padding: 12px 20px; /* Adjust padding as needed */
+    background-color: #4CAF50; /* Green background color */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Add border radius */
+    cursor: pointer; /* Add pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Add smooth transition for background color */
+    margin-bottom: 20px; /* Adjust margin between button and table */
+}
+
+.validate-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Styles for the validation table */
+/* Styles for the validation table */
+.validation-table thead {
+    position: sticky;
+    top: 0;
+    background-color: #f37521; /* Header background color */
+    color: #fff; /* Header text color */
+}
+
+/* Adjust this CSS to allow scrolling for the table */
+.table-container {
+    margin-top: 30px;
+    overflow: auto; /* Enable scrolling for the table */
+    max-width: 90%;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: 200px;
+}
+
+.validation-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.validation-table th, .validation-table td {
+    padding: 12px 10px; /* Adjust padding */
+    border-bottom: 1px solid #ddd; /* Add border-bottom for cells */
+    text-align: left; /* Align text to the left */
+    
+}
+
+.validation-table th {
+    background-color: #f37521; /* Header background color */
+    color: #fff; /* Header text color */
+}
+
+.validation-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Alternate row background color */
+}
+
+.validation-table tbody tr:last-child td {
+    border-bottom: none; /* Remove border-bottom for last row */
+}
+
+/* Hover effect for table rows */
+.validation-table tbody tr:hover {
+    background-color: #e6e6e6; /* Adjust hover background color */
+}
+
+
+.valid-tag {
+    color: green;
+}
+
+.invalid-tag {
+    color: red;
+}
+
+
 
 /* Adjustments for smaller screens */
+ @media (max-width: 1080px){
+    .main{
+        display: grid;
+        max-width: 1200px;
+        margin: 0 auto;
+        margin-top: 20px;
+        padding: 10px;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    
+} 
+
+/* For Medium Devices */
+/* @media (max-width: 774px){
+    .main{
+        display: grid;
+        max-width: 1200px;
+        margin: 0 auto;
+        margin-top: 20px;
+        padding: 10px;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+} */
+@media (max-width: 560px){
+    /* .main{
+        display: grid;
+        max-width: 1200px;
+        margin: 0 auto;
+        margin-top: 20px;
+        padding: 10px;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        height: 100%;
+
+    }
+
+
+    .main{
+        display: grid;
+        max-width: 1200px;
+        margin: 0 auto;
+        margin-top: 20px;
+        padding: 10px;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        height: 100%;
+
+    } */
+
+}
+
+/* For Small Devices */
+@media (max-width: 360px){
+    /* .main{
+        display: grid;
+        max-width: 1200px;
+        margin: 0 auto;
+        margin-top: 20px;
+        padding: 10px;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        height: 100%;
+    } */
+}
+
+
 @media (max-width: 600px) {
-    .dashboard {
-        padding: 15px;
+    .content-wrapper {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+    }
+
+    .file-upload,
+    .generate-container {
+        max-width: 100%; /* Set maximum width to full width on smaller screens */
+        margin-right: 0; /* Remove margin for better stacking */
+        margin-bottom: 20px; /* Add bottom margin for separation */
+    }
+
+    .generate-container {
+        display: flex;
+        padding: 5px;
     }
 
     .options {
         grid-template-columns: 1fr; /* Switch to single column layout on smaller screens */
     }
+
 }

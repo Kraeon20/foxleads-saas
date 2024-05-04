@@ -2,8 +2,91 @@ document.addEventListener('DOMContentLoaded', function () {
     const stateSelect = document.getElementById('state-select');
     const citySelect = document.getElementById('city-select');
     const areaCodeSelect = document.getElementById('area-code-select');
-    const generateBtn = document.getElementById('generate-btn');
-    const generatedNumbersDiv = document.getElementById('generated-numbers');
+    
+
+
+    // Add event listener to the "Validate File" button
+    const validateFileBtn = document.getElementById('validate-file-btn');
+    validateFileBtn.addEventListener('click', validateFile);
+
+    async function validateFile() {
+        const fileInput = document.getElementById('file-input');
+        const file = fileInput.files[0];
+
+        if (!file) {
+            // Display an error message if no file is selected
+            document.getElementById('error-message').textContent = 'Please select a file.';
+            return;
+        }
+
+        // Clear any previous error messages
+        document.getElementById('error-message').textContent = '';
+
+        try {
+            // Read the file content as text
+            const fileText = await file.text();
+
+            // Split the text content by newline character to get each line
+            const lines = fileText.split('\n');
+
+            // Extract numbers from the file lines and send them for validation
+            for (const line of lines) {
+                const numbers = line.trim().split(','); // Assuming numbers are comma-separated
+                for (const number of numbers) {
+                    await validateNumber(number);
+                }
+            }
+        } catch (error) {
+            console.error('Error reading file:', error);
+            // Display an error message if there's an error reading the file
+            document.getElementById('error-message').textContent = 'Error reading file. Please try again.';
+        }
+    }
+
+    async function validateNumber(number) {
+        try {
+            // Make AJAX request to validate the number in the file
+            const validationResponse = await fetch(`/api/validate-number?number=${number}`);
+            const validationData = await validationResponse.json();
+    
+            // Display the validation result
+            console.log(validationData);
+    
+            // If you want to update the UI with the validation result, you can do it here
+            // For example, you can create a new row in the table and populate it with validation details
+            const tableBody = document.getElementById('validation-table-body');
+            const newRow = document.createElement('tr');
+    
+            // Create cells for phone number and details
+            const phoneNumberCell = document.createElement('td');
+            phoneNumberCell.textContent = number;
+            newRow.appendChild(phoneNumberCell);
+    
+            // Create cells for validation details
+            const isValidCell = document.createElement('td');
+            isValidCell.textContent = validationData.is_valid ? 'Valid' : 'Invalid';
+            newRow.appendChild(isValidCell);
+    
+            const lineTypeCell = document.createElement('td');
+            lineTypeCell.textContent = validationData.line_type || 'N/A'; // Display 'N/A' if line_type is not available
+            newRow.appendChild(lineTypeCell);
+    
+            const carrierCell = document.createElement('td');
+            carrierCell.textContent = validationData.carrier || 'N/A'; // Display 'N/A' if carrier is not available
+            newRow.appendChild(carrierCell);
+    
+            const isPrepaidCell = document.createElement('td');
+            isPrepaidCell.textContent = validationData.is_prepaid ? 'Yes' : 'No';
+            newRow.appendChild(isPrepaidCell);
+    
+            // Append the new row to the table body
+            tableBody.appendChild(newRow);
+        } catch (error) {
+            console.error('Error validating number:', error);
+        }
+    }
+    
+
 
     stateSelect.addEventListener('change', function () {
         const selectedState = stateSelect.value;
@@ -17,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     citySelect.innerHTML = '';
                     const cityPlaceholderOption = document.createElement('option');
                     cityPlaceholderOption.value = '';
-                    cityPlaceholderOption.textContent = 'Select a City';
+                    cityPlaceholderOption.textContent = 'Random';
                     citySelect.appendChild(cityPlaceholderOption);
                     data.cities.forEach(city => {
                         const option = document.createElement('option');
@@ -43,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     areaCodeSelect.innerHTML = '';
                     const areaCodePlaceholderOption = document.createElement('option');
                     areaCodePlaceholderOption.value = '';
-                    areaCodePlaceholderOption.textContent = 'Select an Area Code';
+                    areaCodePlaceholderOption.textContent = 'Random';
                     areaCodeSelect.appendChild(areaCodePlaceholderOption);
                     data.areaCodes.forEach(code => {
                         const option = document.createElement('option');
@@ -60,31 +143,72 @@ document.addEventListener('DOMContentLoaded', function () {
             areaCodeSelect.innerHTML = '';
             const areaCodePlaceholderOption = document.createElement('option');
             areaCodePlaceholderOption.value = '';
-            areaCodePlaceholderOption.textContent = 'Select an Area Code';
+            areaCodePlaceholderOption.textContent = 'Random';
             areaCodeSelect.appendChild(areaCodePlaceholderOption);
             areaCodeSelect.disabled = true;
         }
     });
 
-    generateBtn.addEventListener('click', function () {
+    // Event listener for the generate button
+    const validateBtn = document.getElementById('validate-btn');
+    validateBtn.addEventListener('click', async function () {
+        await validateNumbers();
+    });
+
+    async function validateNumbers() {
+        // Fetch selected state, city, area code, and quantity
         const selectedState = stateSelect.value;
         const selectedCity = citySelect.value;
         const selectedAreaCode = areaCodeSelect.value;
-        const numOfNumbers = parseInt(document.getElementById('num-of-numbers').value);
+        const numOfNumbers = document.getElementById('num-of-numbers').value;
 
-        fetch(`/api/generate-numbers?state=${selectedState}&city=${selectedCity}&area_code=${selectedAreaCode}&numOfNumbers=${numOfNumbers}`)
-            .then(response => response.json())
-            .then(data => {
-                const generatedNumbersDiv = document.getElementById('generated-numbers');
-                generatedNumbersDiv.innerHTML = '';
-                data.numbers.forEach(number => {
-                    const p = document.createElement('p');
-                    p.textContent = number;
-                    generatedNumbersDiv.appendChild(p);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching random numbers:', error);
-            });
-    });
+        // Make AJAX request to get random numbers
+        const numbersResponse = await fetch(`/api/get-random-numbers?state=${selectedState}&city=${selectedCity}&area_code=${selectedAreaCode}&numOfNumbers=${numOfNumbers}`);
+        const numbersData = await numbersResponse.json();
+
+        // Clear previous data from table body
+        const tableBody = document.getElementById('validation-table-body');
+        tableBody.innerHTML = '';
+
+        // Iterate over each generated number
+        for (const number of numbersData.numbers) {
+            try {
+                // Make AJAX request to validate the number
+                const validationResponse = await fetch(`/api/validate-number?number=${number}`);
+                const validationData = await validationResponse.json();
+
+                // Create a new row for the table
+                const newRow = document.createElement('tr');
+
+                // Create cells for phone number and details
+                const phoneNumberCell = document.createElement('td');
+                phoneNumberCell.textContent = number;
+                newRow.appendChild(phoneNumberCell);
+
+                // Create cells for validation details
+                const isValidCell = document.createElement('td');
+                isValidCell.textContent = validationData.is_valid ? 'Valid' : 'Invalid';
+                newRow.appendChild(isValidCell);
+
+                const lineTypeCell = document.createElement('td');
+                lineTypeCell.textContent = validationData.line_type || 'N/A'; // Display 'N/A' if line_type is not available
+                newRow.appendChild(lineTypeCell);
+
+                const carrierCell = document.createElement('td');
+                carrierCell.textContent = validationData.carrier || 'N/A'; // Display 'N/A' if carrier is not available
+                newRow.appendChild(carrierCell);
+
+                const isPrepaidCell = document.createElement('td');
+                isPrepaidCell.textContent = validationData.is_prepaid ? 'Yes' : 'No';
+                newRow.appendChild(isPrepaidCell);
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
+            } catch (error) {
+                console.error('Error validating number:', error);
+            }
+        }
+    }
 });
+
+

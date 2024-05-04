@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,8 +11,8 @@
     <!-- Box Icons  -->
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <!-- Styles  -->
-    <link rel="shortcut icon" href="assets/img/kxp_fav.png" type="image/x-icon">
-    <link rel="stylesheet" href="tests.css">
+    <link rel="shortcut icon" href="{% static 'assets/img/kxp_fav.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="./tests.css">
 </head>
 
 <body>
@@ -20,7 +21,7 @@
         <div class="nav__logo">
             <span class="fox-letters"></span>
             <span class="fox-logo">
-                <img src="./assets/img/background.png" alt="Fox Logo">
+              <img src="{% static 'assets/img/background.png' %}" alt="Fox Logo">
             </span>
             <span class="fox-letters">LEADS_</span>
         </div>
@@ -183,38 +184,40 @@
 
         <div class="dashboard">
             <h2>Generate Numbers</h2>
-            <div class="options">
-                <select id="state-select">
-                    <option value="random">Random State</option>
-                    {% for state in distinct_states %}
+            <div class="generate-container">
+                <div class="options">
+                    <select id="state-select">
+                        <option value="random">Random State</option>
+                        {% for state in distinct_states %}
                         <option value="{{ state.state }}">{{ state.state }}</option>
-                    {% endfor %}
-                </select>
-                
-                <select id="city-select" disabled>
-                    <option value="">Select a City</option>
-                    <option value="random">Random City</option>
-                </select>
-                
-                <select id="area-code-select" disabled>
-                    <option value="">Select an Area Code</option>
-                    <option value="random">Random Area Code</option>
-                </select>
-                
-                
-                <input type="number" id="num-of-numbers" placeholder="Number of numbers">
-                
-                <button id="generate-btn">Generate</button>
+                        {% endfor %}
+                    </select>
+                    <select id="city-select" disabled>
+                        <option value="">Select a City</option>
+                        <option value="random">Random City</option>
+                    </select>
+                    <select id="area-code-select" disabled>
+                        <option value="">Select an Area Code</option>
+                        <option value="random">Random Area Code</option>
+                    </select>
+
+                    <input type="number" id="num-of-numbers" placeholder="Number of numbers" inputmode="numeric">
+
+                    <button id="generate-btn">Generate</button>
+                </div>
+                <div class="generated-numbers" id="generated-numbers">
+                    <!-- Display generated numbers here -->
+                    
+                </div>
                 
             </div>
-            <!-- Display generated numbers here -->
         </div>
-    </div>
+        
     
     
     
     <!-- Link JS -->
-    <script src="tests.js"></script>
+    <script src="./tests.js"></script>
     <script src="{% static 'assets/js/populate_states.js' %}"></script>
 </body>
 

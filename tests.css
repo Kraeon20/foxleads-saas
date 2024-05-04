@@ -29,25 +29,18 @@
     top: 0;
     left: 0;
     height: 100%;
-    width: 78px;
+    width: 250px;
     background-color: var(--color_Dark1);
-    transition: all .5s ease;
     z-index: 100;
 }
-.sidebar:hover{
-    width: 260px;
-}
 
-.sidebar:hover .fox-letters {
-    display: initial;
-}
+
 .nav__logo {
     display: flex;
     align-items: center;
     height: 60px;
     width: 100%;
     color: var(--color_Light1);
-    transition: all .5s ease;
     margin-left: 20px;
 }
   
@@ -55,7 +48,6 @@
     font-size: 1.5rem; /* Adjust the font size as needed */
     font-weight: 600;
     color: #f37521; /* Reddish yellowish color */
-    display: none;
 }
 
 .fox-logo {
@@ -151,15 +143,10 @@
 .home {
     position: relative;
     background-color: var(--color_Light1);
-    left: 78px; /* Adjust based on collapsed width */
-    width: calc(100% - 78px); /* Adjust based on collapsed width */
+    left: 250px; /* Adjust based on collapsed width */
+    width: calc(100% - 250px); /* Adjust based on collapsed width */
     height: 100vh;
     transition: all .5s ease;
-}
-
-.sidebar:hover ~ .home {
-    left: 260px; /* Adjust based on expanded width */
-    width: calc(100% - 260px); /* Adjust based on expanded width */
 }
 
 .navbar {
@@ -167,6 +154,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    height: 10%;
     background-color: #fff; /* Adjust as needed */
     border-bottom: 1px solid #ddd; /* Adjust as needed */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for a professional look */
@@ -183,42 +171,280 @@
 
 /* =============== Dashboard =============== */
 .dashboard {
-    margin: 20px;
-    padding: 20px;
-    background-color: #fff;
+    flex: 2;
+    max-width: 800px; /* Increase maximum width for better spacing */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 20px; /* Add margin to create space between the containers */
 }
+
+.dashboard,
+.chart-container{
+    border: 1px solid rgb(211, 211, 211);
+    border-radius: 8px;
+    margin-left: 20px; /* Add margin to shift the dashboard to the left */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
+
+}
+
+.container {
+    display: flex;
+    margin: 20px auto; /* Center the dashboard horizontally */
+    justify-content: space-between; /* Add space between the dashboard and chart container */
+
+}
+
+
+.chart-container {
+    flex: 1;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 
 .dashboard h2 {
     margin-bottom: 20px;
+    text-align: center; /* Center the heading */
 }
 
 .options {
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next line */
-    align-items: center;
-    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns, each taking 1 fractional unit */
+    gap: 20px; /* adjust gap between columns */
+    align-items: center; /* align items vertically */
 }
+
 
 .options select,
 .options input[type="number"],
+.generated-numbers {
+    width: 100%; /* make them take full width of their grid cell */
+    padding: 4px;
+    border: 1px solid rgb(1, 107, 13);
+    border-radius: 20px; /* border radius */
+    box-sizing: border-box;
+}
+
+#state-select {
+    grid-column: 1;
+}
+
+#city-select {
+    grid-column: 2;
+}
+
+#area-code-select {
+    grid-column: 1;
+}
+
+#num-of-numbers {
+    grid-column: 2;
+}
+/* Styling for the button */
 .options button {
-    flex: 1; /* Each item takes up equal space */
-    margin-bottom: 10px; /* Add spacing between items */
+    padding: 8px 12px;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    background-color: #f37521; 
+    color: #fff; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.options select,
-.options input[type="number"] {
-    margin-right: 0; /* Remove right margin to prevent overflow */
+
+/* Hide number input spinner arrows */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-.options button {
-    margin-top: 10px; /* Add spacing between button and other items */
+input[type="number"] {
+    -moz-appearance: textfield; /* For Firefox */
+    appearance: textfield; /* Standard */
 }
 
-.options button:hover {
-    background-color: #e64a19; /* Adjust as needed */
+.generate-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px; /* Adjust gap between columns */
+}
+
+.generated-numbers {
+    grid-column: 2 / 3; /* Span from second to third column */
+}
+
+/* Add this CSS to your existing stylesheet */
+.export-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align items to the right */
+    margin-top: 20px;
+}
+
+
+.export-dropdown {
+    display: inline-block;
+    position: relative;
+    margin-right: 5px; /* Add margin-right for space */
+}
+
+
+.export-dropdown button {
+    background-color: #f37521;
+    color: #fff;
+    border: none;
+    padding: 5px 12px; /* Adjusted padding */
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 2px; /* Add margin-right for space */
+    font-size: 14px; /* Adjusted font size */
+}
+
+
+
+
+.export-options {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 80px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dddddd;
+    z-index: 1;
+    top: 100%;
+    margin-top: 5%;
+    left: 0;
+}
+
+.export-options button {
+    width: 100%;
+    padding: 2px 5px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #333;
+    font-size: 10px; 
+}
+
+.export-options button:hover {
+    background-color: #10d237;
+}
+
+.export-options.active {
+    display: block;
+}
+
+@media (max-width: 1080px){
+    
+}
+
+/* For Medium Devices */
+@media (max-width: 774px){
+   
+}
+@media (max-width: 560px){
+    
+}
+
+/* For Small Devices */
+@media (max-width: 360px){
+   
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 600px) {
+    .dashboard {
+        padding: 15px;
+    }
+
+    .options {
+        grid-template-columns: 1fr; /* Switch to single column layout on smaller screens */
+    }
+
+    .generate-container {
+        grid-template-columns: 1fr; /* Switch to single column layout on smaller screens */
+    }
+
+    #state-select,
+    #city-select,
+    #area-code-select,
+    #num-of-numbers {
+        width: 100%; /* Make the input fields take full width on smaller screens */
+    }
+
+    .export-dropdown button {
+        margin-right: 0; /* Remove margin-right for space */
+    }
+
+
+    .sidebar {
+        width: 70px; /* Adjust sidebar width for smaller screens */
+    }
+
+    .home {
+        left: 70px; /* Adjust home section position based on sidebar width */
+        width: calc(100% - 70px); /* Adjust home section width based on sidebar width */
+    }
+
+    .navbar {
+        padding: 10px; /* Adjust navbar padding for smaller screens */
+    }
+
+    .nav__logo {
+        margin-left: 10px; /* Adjust logo margin for smaller screens */
+    }
+
+    .fox-letters {
+        font-size: 1.2rem; /* Adjust font size for smaller screens */
+    }
+
+    .sidebar-list li .title {
+        justify-content: center; /* Center align sidebar list items on smaller screens */
+    }
+
+    .sidebar-list li .title .name {
+        display: none; /* Hide sidebar list item names on smaller screens */
+    }
+
+    .sidebar-list li .title .link {
+        justify-content: center; /* Center align sidebar links on smaller screens */
+    }
+
+    .sidebar-list li .title i {
+        min-width: auto; /* Remove minimum width for sidebar icons on smaller screens */
+    }
+
+    .sidebar-list li .submenu {
+        padding: 10px; /* Adjust submenu padding for smaller screens */
+    }
+
+    .submenu .link {
+        padding: 5px; /* Adjust submenu link padding for smaller screens */
+    }
+
+    .submenu-title {
+        display: block; /* Show submenu titles on smaller screens */
+        font-size: 16px; /* Adjust submenu title font size for smaller screens */
+        color: var(--color_Light1); /* Adjust submenu title color for smaller screens */
+        margin-bottom: 5px; /* Add margin bottom for submenu titles on smaller screens */
+    }
+
+    .export-dropdown button {
+        padding: 3px 8px; /* Adjust export button padding for smaller screens */
+        font-size: 12px; /* Adjust export button font size for smaller screens */
+    }
+
+    .export-options {
+        min-width: 60px; /* Adjust export options minimum width for smaller screens */
+        margin-top: 2px; /* Adjust export options margin top for smaller screens */
+    }
+
+    .export-options button {
+        padding: 2px 4px; /* Adjust export options button padding for smaller screens */
+        font-size: 10px; /* Adjust export options button font size for smaller screens */
+    }
 }
 
 /* ============ Responsive / Breakpoints ========== */

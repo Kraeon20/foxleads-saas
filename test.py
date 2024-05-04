@@ -1,34 +1,94 @@
+import csv
 import json
+import random
+from .models import StateData
+from django.db.models import Count
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.http import HttpResponse
 
-def print_states_cities_and_areacodes_from_json():
-    # Load JSON data with explicit encoding
-    with open('raw.json', encoding='utf-8') as f:
-        data = json.load(f)
 
-    # Create a dictionary to store cities and their associated area codes by state
-    states_cities_areacodes = {}
+def dashboard(request):
+    # Fetch distinct states
+    distinct_states = StateData.objects.values('state').annotate(total=Count('state'))
+    distinct_cities = StateData.objects.values('city').annotate(total=Count('city'))
+    distinct_area_codes = StateData.objects.values('area_code').annotate(total=Count('area_code'))
 
-    # Extract and store cities and their associated area codes by state
-    for entry in data:
-        state = entry["state"]
-        city = entry["city"]
-        areacode = entry["area-code"]
-        if state in states_cities_areacodes:
-            if city in states_cities_areacodes[state]:
-                states_cities_areacodes[state][city].append(areacode)
+    # Pass distinct states to the template
+    context = {'distinct_states': distinct_states,
+               'distinct_cities': distinct_cities,
+               'distinct_area_codes': distinct_area_codes,}
+
+    return render(request, 'dashboard.html', context)
+
+
+def get_cities_and_area_codes(request):
+    state = request.GET.get('state', None)
+    if state:
+        # Query your database to fetch cities and area codes based on the selected state
+        cities = StateData.objects.filter(state=state).values_list('city', flat=True).distinct()
+        return JsonResponse({'cities': list(cities)})
+    else:
+        return JsonResponse({'error': 'State parameter is missing'}, status=400)
+
+
+def get_area_codes(request):
+    city = request.GET.get('city', None)
+    if city:
+        # Query your database to fetch cities and area codes based on the selected state
+        area_codes = StateData.objects.filter(city=city).values_list('area_code', flat=True).distinct()
+        return JsonResponse({'areaCodes': list(area_codes)})
+    else:
+        return JsonResponse({'error': 'City parameter is missing'}, status=400)
+
+
+def get_random_numbers(request):
+    state = request.GET.get('state', None)
+    city = request.GET.get('city', None)
+    area_code = request.GET.get('area_code', None)
+    num_of_numbers = int(request.GET.get('numOfNumbers', 1))
+
+    if state or city or area_code:
+        numbers = []
+        for _ in range(num_of_numbers):
+            if state and city and area_code:
+                number = f"{area_code}-{random.randint(100, 999)}-{random.randint(1000, 9999)}"
+            elif state and city:
+                area_codes = StateData.objects.filter(city=city).values_list('area_code', flat=True).distinct()
+                area_code = random.choice(list(area_codes))
+                number = f"{area_code}-{random.randint(100, 999)}-{random.randint(1000, 9999)}"
+            elif state:
+                cities = StateData.objects.filter(state=state).values_list('city', flat=True).distinct()
+                city = random.choice(list(cities))
+                area_codes = StateData.objects.filter(city=city).values_list('area_code', flat=True).distinct()
+                area_code = random.choice(list(area_codes))
+                number = f"{area_code}-{random.randint(100, 999)}-{random.randint(1000, 9999)}"
             else:
-                states_cities_areacodes[state][city] = [areacode]
-        else:
-            states_cities_areacodes[state] = {city: [areacode]}
+                area_codes = StateData.objects.values_list('area_code', flat=True).distinct()
+                area_code = random.choice(list(area_codes))
+                number = f"{area_code}-{random.randint(100, 999)}-{random.randint(1000, 9999)}"
+            numbers.append(number)
+        return JsonResponse({'numbers': numbers})
+    else:
+        return JsonResponse({'error': 'State, City, or Area Code parameter is missing'}, status=400)
+    
 
-    # Print states, cities, and associated area codes
-    print("States, Cities, and Associated Area Codes:")
-    for state, cities_areacodes in sorted(states_cities_areacodes.items()):
-        print(state + ":")
-        for city, areacodes in cities_areacodes.items():
-            print(" -", city + ":")
-            for areacode in areacodes:
-                print("   -", areacode)
 
-if __name__ == "__main__":
-    print_states_cities_and_areacodes_from_json()
+def export_txt(request):
+    generated_numbers = request.GET.getlist('numbers[]')  # Assuming the generated numbers are sent as a list in the request
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename="generated_numbers.txt"'
+    response.write('\n'.join(generated_numbers))
+    return response
+
+def export_csv(request):
+    generated_numbers = request.GET.getlist('numbers[]')  # Assuming the generated numbers are sent as a list in the request
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="generated_numbers.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Generated Numbers'])  # Write header row
+    for number in generated_numbers:
+        writer.writerow([number])
+
+    return response
