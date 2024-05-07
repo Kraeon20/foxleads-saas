@@ -1,20 +1,12 @@
-# folders
-/Dashboard Sidebar [Korsat X Parmaga]
+# Ignore specific folders
+Dashboard Sidebar [Korsat X Parmaga]/
+Html-Css-Grid-Admin-Dashboard/
 
-/Html-Css-Grid-Admin-Dashboard
-
-
-# files
+# Ignore specific files
 divs.html
-
 tests.js
-
 tests.html
-
 tests.css
-
 tests.py
-
 ngrok.exe
-
 mongojson.py
