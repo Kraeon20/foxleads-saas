@@ -90,7 +90,7 @@ async def validate_number(request):
     url = "https://reverse-phone-api.p.rapidapi.com/3.1/phone"
     querystring = {"phone": number}
     headers = {
-        "X-RapidAPI-Key": "dd318e0e99mshd99bb7bfe33dca1p1c4e65jsn472711ed868e",
+        "X-RapidAPI-Key": "8da8c58121mshf9dd7599ee5bd69p115cffjsn437aaaa9f075",
         "X-RapidAPI-Host": "reverse-phone-api.p.rapidapi.com"
     }
 
