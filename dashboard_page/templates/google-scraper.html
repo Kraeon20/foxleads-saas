@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Dropdown Menu | Korsat X Parmaga</title>
+
+    <!-- Box Icons  -->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Styles  -->
+    <link rel="shortcut icon" href="{% static 'assets/img/background.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/google-scraper.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+</head>
+
+<body class="dashboard">
+    <div class="sidebar">
+        <!-- ========== Logo ============  -->
+        <div class="nav__logo">
+            <span class="fox-letters"></span>
+            <span class="fox-logo">
+              <img src="{% static 'assets/img/background.png' %}" alt="Fox Logo">
+            </span>
+            <span class="fox-letters">LEADS_</span>
+        </div>
+
+        <!-- ========== List ============  -->
+        <ul class="sidebar-list">
+            <!-- -------- Non Dropdown List Item ------- -->
+            <li>
+                <div class="title">
+                    <a href="#" class="link">
+                        <i class='bx bx-grid-alt'></i>
+                        <span class="name">Dashboard</span>
+                    </a>
+                </div>
+            </li>
+
+            <!-- -------- Non Dropdown List Item ------- -->
+            <li>
+                <div class="title">
+                    <a href="#" class="link">
+                        <i class='bx bx-pie-chart-alt-2'></i>
+                        <span class="name">Validate Numbers</span>
+                    </a>
+                </div>
+            </li>
+
+            <!-- -------- Google Navigation Link ------- -->
+            <li>
+                <div class="title">
+                    <a href="#" target="_blank" class="link">
+                        <i class='bx bxl-google'></i> <!-- Assuming "bxl-google" is the Boxicons class for Google -->
+                        <span class="name">Google</span>
+                    </a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <!-- ============= Home Section =============== -->
+    <div class="home">
+        <nav class="navbar">
+            <div class="navbar-left">
+                <span class="current-page">Google Scraper</span> <!-- Replace with the current page from the sidebar -->
+            </div>
+            <div class="navbar-right">
+                <span>Welcome, User</span> <!-- Replace "User" with the actual username -->
+            </div>
+        </nav>
+    
+
+<!-- ============= Google Search Section =============== -->
+    <div class="content">
+        <div class="container">
+            <div class="google-search">
+                <form id="google-search-form">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="keyword">Keyword:</label>
+                            <input type="text" id="keyword" name="keyword" required class="form-control">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="location">Location:</label>
+                            <input type="text" id="location" name="location" required class="form-control">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" id="quantity" name="quantity" required class="form-control">
+                        </div>
+                    </div>
+                    <!-- Change button type to button and add onclick event -->
+                    <button type="button" class="btn btn-primary" onclick="scrapeGoogleMapsData()">Search</button>
+                </form>
+
+                <!-- Table to display search results -->
+                <div class="search-results">
+                    <table id="search-results-table" class="table">
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Address</th>
+                                <th>Website</th>
+                                <th>Phone Number</th>
+                                <th>Reviews Count</th>
+                                <th>Average Reviews</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                            </tr>
+                        </thead>
+                        <tbody id="search-results-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function scrapeGoogleMapsData() {
+            // Get the values from the input fields
+            const keyword = document.getElementById('keyword').value;
+            const location = document.getElementById('location').value;
+            const quantity = document.getElementById('quantity').value;
+
+            // Prepare the data to be sent in the request
+            const requestData = {
+                keyword: keyword,
+                location: location,
+                quantity: quantity
+            };
+
+            // Get the CSRF token
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            // Make a POST request to your backend endpoint
+            fetch('/scrape-google-maps/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken // Include the CSRF token in the headers
+                },
+                body: JSON.stringify(requestData),
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                console.log(data); // Log the scraped data
+                displaySearchResults(data.data); // Call a function to display the search results
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                // Handle errors and display error message to the user
+            });
+        }
+
+
+    
+        function displaySearchResults(data) {
+            const tableBody = document.getElementById('search-results-body');
+            tableBody.innerHTML = ''; // Clear existing data
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                // Populate table cells with data
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.address}</td>
+                    <td>${item.website}</td>
+                    <td>${item.phone_number}</td>
+                    <td>${item.reviews_count}</td>
+                    <td>${item.reviews_average}</td>
+                    <td>${item.latitude}</td>
+                    <td>${item.longitude}</td>
+                `;
+
+                tableBody.appendChild(row); // Append the row to the table body
+            });
+        }
+    </script>
+    
+    
+</body>
+
+</html>
+
+

@@ -8,4 +8,7 @@ urlpatterns = [
     path('api/get-random-numbers', views.get_random_numbers, name='get_random_numbers'),
     path('api/validate-number/', views.validate_number, name='validate_number'),
     path('api/validate-number-in-file', views.validate_number, name='validate_number'),
+    path('google-scraper/', views.google_scraper, name='google_craper'),
+    path('scrape-google-maps/', views.scrape_google_maps_data, name='scrape_google_maps'),
+
 ]

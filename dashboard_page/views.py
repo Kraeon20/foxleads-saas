@@ -188,3 +188,50 @@ def validate_file(request):
         return JsonResponse({'validation_results': validation_results})
     else:
         return JsonResponse({'error': 'No file uploaded'}, status=400)
+
+
+
+def google_scraper(request):
+    
+    return render(request, 'google-scraper.html')
+
+
+from .utils import main  # Import your scraping script
+
+def scrape_google_maps_data(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        keyword = data.get('keyword')
+        location = data.get('location')
+        quantity = data.get('quantity')
+
+        if quantity is None:
+            return JsonResponse({'error': 'Quantity parameter is missing'}, status=400)
+
+        try:
+            quantity = int(quantity)
+        except ValueError:
+            return JsonResponse({'error': 'Quantity must be an integer'}, status=400)
+
+        # Call the main function of your scraping script with the provided parameters
+        business_list = main(keyword, location, quantity)
+
+        # Prepare the data to be sent to the HTML template
+        data = []
+        for business in business_list.business_list:
+            data.append({
+                'name': business.name,
+                'address': business.address,
+                'website': business.website,
+                'phone_number': business.phone_number,
+                'reviews_count': business.reviews_count,
+                'reviews_average': business.reviews_average,
+                'latitude': business.latitude,
+                'longitude': business.longitude
+            })
+
+        print(data)  # Add this line to print the data
+
+        return JsonResponse({'data': data})
+    else:
+        return JsonResponse({'error': 'Only POST method is supported for this endpoint'}, status=405)

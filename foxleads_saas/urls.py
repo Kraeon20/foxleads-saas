@@ -17,7 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from dashboard_page.views import dashboard
-from dashboard_page.views import dashboard, get_cities_and_area_codes, get_area_codes, get_random_numbers, validate_number
+from dashboard_page.views import (dashboard, 
+                                    get_cities_and_area_codes, 
+                                    get_area_codes, 
+                                    get_random_numbers, 
+                                    validate_number, 
+                                    google_scraper,
+                                    # scrape_google_maps
+                                    scrape_google_maps_data)
 
 
 urlpatterns = [
@@ -28,5 +35,8 @@ urlpatterns = [
     path('api/area-codes/', get_area_codes, name='get_area_codes'),
     path('api/get-random-numbers', get_random_numbers, name='get_random_numbers'),
     path('api/validate-number/', validate_number, name='validate_number'),
+    path('google-scraper/', google_scraper, name='google_scraper'),
+    path('scrape-google-maps/', scrape_google_maps_data, name='scrape_google_maps'),
+
 
 ]
