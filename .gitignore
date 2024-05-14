@@ -10,3 +10,8 @@ tests.css
 tests.py
 ngrok.exe
 mongojson.py
+valid_emails.txt
+validateEmail.py
+raw.json
+numx.txt
+input.txt

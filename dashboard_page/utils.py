@@ -5,6 +5,7 @@ import pandas as pd
 import argparse
 import os
 import sys
+from pymongo import MongoClient
 
 @dataclass
 class Business:
@@ -22,23 +23,20 @@ class Business:
 
 @dataclass
 class BusinessList:
-    """holds list of Business objects,
-    and save to both excel and csv
-    """
+    """holds list of Business objects, and saves to MongoDB"""
     business_list: list[Business] = field(default_factory=list)
+    db_name = 'foxleads_db'
+    collection_name = 'test_scraped_data'
 
-    def dataframe(self):
-        """transform business_list to pandas dataframe
+    def save_to_mongodb(self):
+        client = MongoClient('mongodb://localhost:27017/')  # Connect to MongoDB
+        db = client[self.db_name]
+        collection = db[self.collection_name]
+        for business in self.business_list:
+            collection.insert_one(asdict(business))
 
-        Returns: pandas dataframe
-        """
-        return pd.json_normalize(
-            (asdict(business) for business in self.business_list), sep="_"
-        )
-
-def extract_coordinates_from_url(url: str) -> tuple[float,float]:
+def extract_coordinates_from_url(url: str) -> tuple[float, float]:
     """helper function to extract coordinates from url"""
-    
     coordinates = url.split('/@')[-1].split('/')[0]
     # return latitude, longitude
     return float(coordinates.split(',')[0]), float(coordinates.split(',')[1])
@@ -46,7 +44,7 @@ def extract_coordinates_from_url(url: str) -> tuple[float,float]:
 def main(keyword, location, quantity):
     """Scrape Google Maps data using the provided keyword, location, and quantity."""
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
 
         page.goto("https://www.google.com/maps", timeout=60000)
@@ -103,7 +101,7 @@ def main(keyword, location, quantity):
                 listing.click()
                 page.wait_for_timeout(5000)
 
-                name_attibute = 'aria-label'
+                name_attribute = 'aria-label'
                 address_xpath = '//button[@data-item-id="address"]//div[contains(@class, "fontBodyMedium")]'
                 website_xpath = '//a[@data-item-id="authority"]//div[contains(@class, "fontBodyMedium")]'
                 phone_number_xpath = '//button[contains(@data-item-id, "phone:tel:")]//div[contains(@class, "fontBodyMedium")]'
@@ -111,57 +109,40 @@ def main(keyword, location, quantity):
                 reviews_average_xpath = '//div[@jsaction="pane.reviewChart.moreReviews"]//div[@role="img"]'
 
                 business = Business()
+                
+                business.name = listing.get_attribute(name_attribute) or ""
 
-                name_attibute = 'aria-label'
-                business_name = listing.get_attribute(name_attibute)
-                business.name = business_name if business_name else ""
+                address_xpath = '//button[@data-item-id="address"]//div[contains(@class, "fontBodyMedium")]'
+                business.address = page.locator(address_xpath).all()[0].inner_text() if page.locator(address_xpath).count() > 0 else ""
 
+                website_xpath = '//a[@data-item-id="authority"]//div[contains(@class, "fontBodyMedium")]'
+                business.website = page.locator(website_xpath).all()[0].inner_text() if page.locator(website_xpath).count() > 0 else ""
 
-                if page.locator(address_xpath).count() > 0:
-                    business.address = page.locator(address_xpath).all()[0].inner_text()
-                else:
-                    business.address = ""
+                phone_number_xpath = '//button[contains(@data-item-id, "phone:tel:")]//div[contains(@class, "fontBodyMedium")]'
+                business.phone_number = page.locator(phone_number_xpath).all()[0].inner_text() if page.locator(phone_number_xpath).count() > 0 else ""
 
-                if page.locator(website_xpath).count() > 0:
-                    business.website = page.locator(website_xpath).all()[0].inner_text()
-                else:
-                    business.website = ""
+                review_count_xpath = '//button[@jsaction="pane.reviewChart.moreReviews"]//span'
+                reviews_count_text = page.locator(review_count_xpath).inner_text().split()[0].replace(',', '').strip() if page.locator(review_count_xpath).count() > 0 else ""
+                business.reviews_count = int(reviews_count_text) if reviews_count_text.isdigit() else None
 
-                if page.locator(phone_number_xpath).count() > 0:
-                    business.phone_number = page.locator(phone_number_xpath).all()[0].inner_text()
-                else:
-                    business.phone_number = ""
-
-                if page.locator(review_count_xpath).count() > 0:
-                    reviews_count_text = page.locator(review_count_xpath).inner_text().split()[0].replace(',', '').strip()
-                    business.reviews_count = int(reviews_count_text) if reviews_count_text.isdigit() else None
-                else:
-                    business.reviews_count = ""
-
-                if page.locator(reviews_average_xpath).count() > 0:
-                    reviews_average_text = page.locator(reviews_average_xpath).get_attribute('aria-label')
-                    business.reviews_average = float(reviews_average_text.split()[0].replace(',', '.')) if reviews_average_text else None
-                else:
-                    business.reviews_average = ""
+                reviews_average_xpath = '//div[@jsaction="pane.reviewChart.moreReviews"]//div[@role="img"]'
+                reviews_average_text = page.locator(reviews_average_xpath).get_attribute('aria-label') if page.locator(reviews_average_xpath).count() > 0 else ""
+                business.reviews_average = float(reviews_average_text.split()[0].replace(',', '.')) if reviews_average_text else None
 
                 business.latitude, business.longitude = extract_coordinates_from_url(page.url)
 
                 business_list.business_list.append(business)
+                
             except Exception as e:
                 print(f'Error occurred: {e}')
 
         browser.close()
-
-        return business_list  # Instead of saving, return the business_list object
-
+        business_list.save_to_mongodb()
 
 
-        # #########
-        # # output
-        # #########
-        
-        # browser.close()
-
-        # return business_list  # Instead of saving, return the business_list object
+        return business_list
+    
 
 
+if __name__ == "__main__":
+    main()

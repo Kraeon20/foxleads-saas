@@ -3,7 +3,7 @@ import json
 import random
 import asyncio
 import requests
-from .models import StateData
+from .models import StateData, GoogleScrapedData
 from django.db.models import Count
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -215,6 +215,19 @@ def scrape_google_maps_data(request):
 
         # Call the main function of your scraping script with the provided parameters
         business_list = main(keyword, location, quantity)
+
+        # Save the scraped data to MongoDB
+        for business in business_list.business_list:
+            GoogleScrapedData.objects.create(
+                name=business.name,
+                address=business.address,
+                website=business.website,
+                phone_number=business.phone_number,
+                reviews_count=business.reviews_count,
+                reviews_average=business.reviews_average,
+                latitude=business.latitude,
+                longitude=business.longitude
+            )
 
         # Prepare the data to be sent to the HTML template
         data = []
