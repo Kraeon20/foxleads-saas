@@ -1,146 +1,172 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sidebar Dropdown Menu | Korsat X Parmaga</title>
 
     <!-- Box Icons  -->
-    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link
+      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+      rel="stylesheet"
+    />
     <!-- Styles  -->
-    <link rel="shortcut icon" href="{% static 'assets/img/background.png' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link
+      rel="shortcut icon"
+      href="{% static 'assets/img/background.png' %}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
 
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+    />
+  </head>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-
-
-</head>
-
-<body>
+  <body>
     <div class="sidebar">
-        <!-- ========== Logo ============  -->
-        <div class="nav__logo">
-            <span class="fox-letters"></span>
-            <span class="fox-logo">
-              <img src="{% static 'assets/img/background.png' %}" alt="Fox Logo">
-            </span>
-            <span class="fox-letters">LEADS_</span>
-        </div>
+      <!-- ========== Logo ============  -->
+      <div class="nav__logo">
+        <span class="fox-letters"></span>
+        <span class="fox-logo">
+          <img src="{% static 'assets/img/background.png' %}" alt="Fox Logo" />
+        </span>
+        <span class="fox-letters">LEADS_</span>
+      </div>
 
-        <!-- ========== List ============  -->
-        <ul class="sidebar-list">
-            <!-- -------- Non Dropdown List Item ------- -->
-            <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-grid-alt'></i>
-                        <span class="name">Dashboard</span>
-                    </a>
-                </div>
-            </li>
+      <!-- ========== List ============  -->
+      <ul class="sidebar-list">
+        <!-- -------- Non Dropdown List Item ------- -->
+        <li>
+          <div class="title">
+            <a href="#" class="link">
+              <i class="bx bx-grid-alt"></i>
+              <span class="name">Dashboard</span>
+            </a>
+          </div>
+        </li>
 
-            <!-- -------- Non Dropdown List Item ------- -->
-            <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-pie-chart-alt-2'></i>
-                        <span class="name">Validate Numbers</span>
-                    </a>
-                </div>
-            </li>
+        <!-- -------- Non Dropdown List Item ------- -->
+        <li>
+          <div class="title">
+            <a href="#" class="link">
+              <i class="bx bx-pie-chart-alt-2"></i>
+              <span class="name">Validate Numbers</span>
+            </a>
+          </div>
+        </li>
 
-            <!-- -------- Google Navigation Link ------- -->
-            <li>
-                <div class="title">
-                    <a href="#" target="_blank" class="link">
-                        <i class='bx bxl-google'></i> <!-- Assuming "bxl-google" is the Boxicons class for Google -->
-                        <span class="name">Google</span>
-                    </a>
-                </div>
-            </li>
-
-        </ul>
+        <!-- -------- Google Navigation Link ------- -->
+        <li>
+          <div class="title">
+            <a href="#" target="_blank" class="link">
+              <i class="bx bxl-google"></i>
+              <!-- Assuming "bxl-google" is the Boxicons class for Google -->
+              <span class="name">Google</span>
+            </a>
+          </div>
+        </li>
+      </ul>
     </div>
 
     <!-- ============= Home Section =============== -->
     <div class="home">
-        <nav class="navbar">
-            <div class="navbar-left">
-                <span class="current-page">Dashboard</span> <!-- Replace with the current page from the sidebar -->
-            </div>
-            <div class="navbar-right">
-                <span>Welcome, User</span> <!-- Replace "User" with the actual username -->
-            </div>
-        </nav>
-
-        <div class="main">
-            <div class="container">
-                <div class="file-upload-container">
-                    <!-- Add label above file-upload container -->
-                    <label class="label" for="file-input">Upload File</label>
-                    <div class="file-upload">
-                        <div class="drop-zone" id="drop-zone">
-                            <span class="choose-file-button" id="drop-text"></span>
-                            <span class="file-message">Click to Upload <p>or drag and drop files here</p></span>
-                            <input class="file-input" type="file" id="file-input">
-                        </div>
-                        <p id="file-name"></p>
-                        <button id="validate-file-btn" class="validate-file-btn">Validate File</button>
-                        <div id="error-message" style="color: red;"></div>
-                    </div>
-                </div>
-                
-                <div class="dashboard-container">
-                    <label class="label">Dashboard</label>
-                    <div class="generate-container">
-                        <div class="options">
-                            <select id="state-select">
-                                <option value="random">State</option>
-                                {% for state in distinct_states %}
-                                <option value="{{ state.state }}">{{ state.state }}</option>
-                                {% endfor %}
-                            </select>
-                            <select id="city-select" disabled>
-                                <option value="">City</option>
-                                <option value="random">City</option>
-                            </select>
-                            <select id="area-code-select" disabled>
-                                <option value="random">Code</option>
-                            </select>
-                            <input type="number" id="num-of-numbers" placeholder="Quantity" inputmode="numeric">
-                        </div>
-                        
-                        <div class="validate-btn-container">
-                            <button id="validate-btn" class="validate-btn">Validate</button>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <!-- Table Container -->
-            <div class="table-container" id="validation-table">
-                <table class="validation-table">
-                    <thead>
-                        <tr>
-                            <th>phone_number</th>
-                            <th>is_valid</th>
-                            <th>line_type</th>
-                            <th>carrier</th>
-                            <th>is_prepaid</th>
-                        </tr>
-                    </thead>
-                    <tbody id="validation-table-body"></tbody>
-                </table>
-            </div>
-                
+      <nav class="navbar">
+        <div class="navbar-left">
+          <span class="current-page">Dashboard</span>
+          <!-- Replace with the current page from the sidebar -->
         </div>
+        <div class="navbar-right">
+          <span>Welcome, User</span>
+          <!-- Replace "User" with the actual username -->
+        </div>
+      </nav>
+
+      <div class="main">
+        <div class="container">
+          <div class="file-upload-container">
+            <!-- Add label above file-upload container -->
+            <label class="label" for="file-input">Upload File</label>
+            <div class="file-upload">
+              <div class="drop-zone" id="drop-zone">
+                <span class="choose-file-button" id="drop-text"></span>
+                <span class="file-message"
+                  >Click to Upload
+                  <p>or drag and drop files here</p></span
+                >
+                <input class="file-input" type="file" id="file-input" />
+              </div>
+              <p id="file-name"></p>
+              <button id="validate-file-btn" class="validate-file-btn">
+                Validate File
+              </button>
+              <div id="error-message" style="color: red"></div>
+            </div>
+          </div>
+
+          <div class="dashboard-container">
+            <label class="label">Dashboard</label>
+            <div class="generate-container">
+              <div class="options">
+                <select id="state-select">
+                  <option value="random">State</option>
+                  {% for state in distinct_states %}
+                  <option value="{{ state.state }}">{{ state.state }}</option>
+                  {% endfor %}
+                </select>
+                <select id="city-select" disabled>
+                  <option value="">City</option>
+                  <option value="random">City</option>
+                </select>
+                <select id="area-code-select" disabled>
+                  <option value="random">Code</option>
+                </select>
+                <input
+                  type="number"
+                  id="num-of-numbers"
+                  placeholder="Quantity"
+                  inputmode="numeric"
+                />
+              </div>
+
+              <div class="validate-btn-container">
+                <button id="validate-btn" class="validate-btn">Validate</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container" id="validation-table">
+          <table class="validation-table">
+            <thead>
+              <tr>
+                <th>phone_number</th>
+                <!-- <th>status</th> -->
+                <th>number_type</th>
+                <th>is_valid</th>
+                <th>carrier</th>
+                <th>country</th>
+                <th>region_name</th>
+                <th>city</th>
+                <th>zip_code</th>
+              </tr>
+            </thead>
+            <tbody id="validation-table-body"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
     <!-- Link JS -->
@@ -148,6 +174,5 @@
     <!-- <script src="{% static 'assets/js/file-upload.js' %}"></script> -->
     <!-- <script src="{% static 'assets/js/apiconnect.js' %}"></script> -->
     <script src="{% static 'assets/js/populate_states.js' %}"></script>
-</body>
-
+  </body>
 </html>

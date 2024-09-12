@@ -89,43 +89,55 @@ async def validate_number(request):
         return JsonResponse(cached_data)
 
     # If data is not cached, make API request with a 1-second delay
-    url = "https://reverse-phone-api.p.rapidapi.com/3.1/phone"
-    querystring = {"phone": number}
+    url = "https://free-phone-number-lookup-and-validation-api1.p.rapidapi.com/json"
+    querystring = {"number": number}
     headers = {
-        "X-RapidAPI-Key": "8da8c58121mshf9dd7599ee5bd69p115cffjsn437aaaa9f075",
-        "X-RapidAPI-Host": "reverse-phone-api.p.rapidapi.com"
+        "x-rapidapi-key": "dd318e0e99mshd99bb7bfe33dca1p1c4e65jsn472711ed868e",
+        "x-rapidapi-host": "free-phone-number-lookup-and-validation-api1.p.rapidapi.com"
     }
 
     try:
         # Introduce a 1-second delay before making the API request
         await asyncio.sleep(1)
-        
+
         response = requests.get(url, headers=headers, params=querystring)
         data = response.json()
 
-        # Extract required details from API response
-        phone_number = data.get('phone')
-        is_valid = data.get('is_valid')
-        line_type = data.get('line_type')
+        # Extract the required details from the API response
+        query = data.get('query')
+        # status = data.get('status')
+        number_type = data.get('numberType')
+        is_valid = data.get('numberValid')
         carrier = data.get('carrier')
-        is_prepaid = data.get('is_prepaid')
+        country = data.get('country')
+        region_name = data.get('regionName')
+        city = data.get('city')
+        zip_code = data.get('zip')
 
         # Store data in cache for 1 minute
         cache.set(number, {
-            'phone_number': phone_number,
+            'query': query,
+            # 'status': status,
+            'number_type': number_type,
             'is_valid': is_valid,
-            'line_type': line_type,
             'carrier': carrier,
-            'is_prepaid': is_prepaid
+            'country': country,
+            'region_name': region_name,
+            'city': city,
+            'zip_code': zip_code
         }, timeout=60)
 
         # Return the fetched data
         return JsonResponse({
-            'phone_number': phone_number,
+            'query': query,
+            # 'status': status,
+            'number_type': number_type,
             'is_valid': is_valid,
-            'line_type': line_type,
             'carrier': carrier,
-            'is_prepaid': is_prepaid
+            'country': country,
+            'region_name': region_name,
+            'city': city,
+            'zip_code': zip_code
         })
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
@@ -140,14 +152,17 @@ def validate_file(request):
             numbers = parse_csv_file(file)
         else:
             return JsonResponse({'error': 'Unsupported file type'}, status=400)
+        
         validation_results = []
         for number in numbers:
             validation_result = validate_number({'GET': {'number': number}})
             validation_results.append(validation_result)
+        
         return JsonResponse({'results': validation_results})
     else:
         return JsonResponse({'error': 'File not provided'}, status=400)
-
+    
+    
 def parse_txt_file(file):
     numbers = []
     for line in file:
