@@ -3,6 +3,8 @@ import json
 import random
 import asyncio
 import requests
+import csv
+from io import StringIO
 from .models import StateData, GoogleScrapedData
 from django.db.models import Count
 from django.shortcuts import render
@@ -128,11 +130,6 @@ async def validate_number(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-
-
-
-import csv
-from io import StringIO
 
 def validate_file(request):
     if request.method == 'POST' and request.FILES['file']:
