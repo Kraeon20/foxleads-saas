@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import certifi
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&e2@lzzeh=8fo)ldjlo(2ntb(gidy0)d%&7(8puvnpw%qf8cwy'
+SECRET_KEY = os.getenv('SECRET_KEY')
+
+if not SECRET_KEY:
+    raise ValueError("Django SECRET_KEY is not set in the .env file.")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,7 +90,8 @@ DATABASES = {
         'NAME': 'foxleads_db', 
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'localhost',
+            'host': os.getenv('MONGO_URI'),
+            'tlsCAFile': certifi.where(),
         },
     }
 }
