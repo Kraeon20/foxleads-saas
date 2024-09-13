@@ -93,79 +93,79 @@
         </div>
       </nav>
 
-      <div class="main">
-        <div class="container">
-          <div class="file-upload-container">
-            <!-- Add label above file-upload container -->
-            <label class="label" for="file-input">Upload File</label>
-            <div class="file-upload">
-              <div class="drop-zone" id="drop-zone">
-                <span class="choose-file-button" id="drop-text"></span>
-                <span class="file-message"
-                  >Click to Upload
-                  <p>or drag and drop files here</p></span
-                >
-                <input class="file-input" type="file" id="file-input" />
-              </div>
-              <p id="file-name"></p>
-              <button id="validate-file-btn" class="validate-file-btn">
-                Validate File
-              </button>
-              <div id="error-message" style="color: red"></div>
+      <div class="container">
+        <!-- File Upload Container -->
+        <div class="file-upload-container container-item">
+          <label class="label" for="file-input">Upload File</label>
+          <div class="drop-zone" id="drop-zone">
+            <span class="choose-file-button" id="drop-text"></span>
+            <span class="file-message"
+              >Click to Upload
+              <p>or drag and drop files here</p></span
+            >
+            <input class="file-input" type="file" id="file-input" />
+          </div>
+          <p id="file-name"></p>
+          <div class="validate-btn-container">
+            <button id="validate-file-btn" class="validate-file-btn">
+              Start
+            </button>
+          </div>
+          <div id="error-message" style="color: red"></div>
+        </div>
+
+        <!-- Generation Container -->
+        <div class="gen-container container-item">
+          <label class="label">Generate</label>
+          <div class="options">
+            <div class="option-pair">
+              <select id="state-select">
+                <option value="random">State</option>
+                {% for state in distinct_states %}
+                <option value="{{ state.state }}">{{ state.state }}</option>
+                {% endfor %}
+              </select>
+              <select id="city-select" disabled>
+                <option value="">City</option>
+                <option value="random">City</option>
+              </select>
+            </div>
+            <div class="option-pair">
+              <select id="area-code-select" disabled>
+                <option value="random">Area Code</option>
+              </select>
+              <input
+                type="number"
+                id="num-of-numbers"
+                placeholder="Quantity"
+                inputmode="numeric"
+              />
             </div>
           </div>
 
-          <div class="dashboard-container">
-            <label class="label">Dashboard</label>
-            <div class="generate-container">
-              <div class="options">
-                <select id="state-select">
-                  <option value="random">State</option>
-                  {% for state in distinct_states %}
-                  <option value="{{ state.state }}">{{ state.state }}</option>
-                  {% endfor %}
-                </select>
-                <select id="city-select" disabled>
-                  <option value="">City</option>
-                  <option value="random">City</option>
-                </select>
-                <select id="area-code-select" disabled>
-                  <option value="random">Code</option>
-                </select>
-                <input
-                  type="number"
-                  id="num-of-numbers"
-                  placeholder="Quantity"
-                  inputmode="numeric"
-                />
-              </div>
-
-              <div class="validate-btn-container">
-                <button id="validate-btn" class="validate-btn">Validate</button>
-              </div>
-            </div>
+          <div class="validate-btn-container">
+            <button id="validate-btn" class="validate-btn">Start</button>
           </div>
         </div>
+      </div>
 
-        <!-- Table Container -->
-        <div class="table-container" id="validation-table">
-          <table class="validation-table">
-            <thead>
-              <tr>
-                <th>phone_number</th>
-                <!-- <th>status</th> -->
-                <th>number_type</th>
-                <th>is_valid</th>
-                <th>carrier</th>
-                <th>country</th>
-                <th>region_name</th>
-                <th>city</th>
-                <th>zip_code</th>
-              </tr>
-            </thead>
-            <tbody id="validation-table-body"></tbody>
-          </table>
-        </div>
+      <!-- Table Container -->
+      <div class="table-container" id="validation-table">
+        <table class="validation-table">
+          <thead>
+            <tr>
+              <th>phone_number</th>
+              <th>number_type</th>
+              <th>is_valid</th>
+              <th>carrier</th>
+              <th>country</th>
+              <th>region_name</th>
+              <th>city</th>
+              <th>zip_code</th>
+            </tr>
+          </thead>
+          <tbody id="validation-table-body"></tbody>
+        </table>
       </div>
     </div>
 
