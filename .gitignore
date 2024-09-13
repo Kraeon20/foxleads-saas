@@ -3,7 +3,7 @@ Dashboard-Sidebar-[Korsat-X-Parmaga]/
 Html-Css-Grid-Admin-Dashboard/
 
 # Ignore specific files
-# .env
+.env
 divs.html
 tests.js
 tests.html
